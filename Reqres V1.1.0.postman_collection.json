@@ -1,0 +1,166 @@
+{
+  "info": {
+    "_postman_id": "d00ec341-f48f-4b3f-a5eb-6a600b4571ce",
+    "name": "Reqres V1.1.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23851139",
+    "_collection_link": "https://go.postman.co/collection/23851139-d00ec341-f48f-4b3f-a5eb-6a600b4571ce?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET > List users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonResponseData = pm.response ; \r\n\r\n// 1-Verify on the status code \r\npm.test(\"Verify on the status code 200 \",function(){\r\npm.expect(jsonResponseData.code).to.eql(200)})\r\n//******************************************* */\r\npm.test(\"Verify on the stsus ok\",function(){\r\npm.expect(jsonResponseData.status).to.oneOf([\"OK\",\"ok\",\"oK\",\"ok\"])})\r\n\r\n//--------------------------------------------------------------\r\n// 2- Verify on the reposnse body \r\npm.test(\"Verify on page = 2\",function(){\r\npm.expect(jsonResponseData.json().page).to.equal(2)})\r\n//---------------------------------------------------------\r\n\r\npm.test(\"Verify on per_page\",function(){\r\npm.expect(jsonResponseData.json().per_page).to.equal(6)})\r\n//---------------------------------------------------------\r\n// Verify on total =12\r\npm.test(\"Verify on total is = 12 \" , function(){\r\npm.expect(jsonResponseData.json().total).to.equal(12)})\r\n//---------------------------------------------------------\r\n// Verify on data \r\n\r\npm.test(\"Verify on data >> id = 7\",function(){\r\npm.expect(jsonResponseData.json().data[0].id).to.equal(7)})\r\n//---------------------------------------------------------\r\npm.test(\"Verify on data >> email= michael.lawson@reqres.in\" , function(){\r\npm.expect(jsonResponseData.json().data[0].email).to.equal(\"michael.lawson@reqres.in\")})\r\n//------------------------------------------------------------\r\n// Verify on data >> first_name = Michael \r\npm.test(\"Verify on first_name\" , function(){\r\n    pm.expect(jsonResponseData.json().data[0].last_name).to.equal(\"Lawson\")\r\n} )\r\n//-----------------------------------------------------------\r\n// Verify on the data >> avatar \r\npm.test(\"Verify on the data >> avatar\",function(){\r\npm.expect(jsonResponseData.json().data[0].avatar=\"https://reqres.in/img/faces/7-image.jpg\")})\r\n//-----------------------------------------------------------\r\n// Verify on data[1] >> id \r\npm.test(\"Verify on data[1] >> id\",function(){\r\npm.expect(jsonResponseData.json().data[1].id).to.equal(8)})\r\n//-----------------------------------------------------------\r\n// Verify on the data[1] >> email  \r\npm.test(\"Verify on the email is = lindsay.ferguson@reqres.in\",function(){\r\npm.expect(jsonResponseData.json().data[1].email).to.equal(\"lindsay.ferguson@reqres.in\")})\r\n//------------------------------------------------------\r\n//  Verify data[1] >> first_name\r\npm.test(\"Verify first_name\", function(){\r\n    pm.expect(jsonResponseData.json().data[1].first_name).to.equal(\"Lindsay\")\r\n})\r\n//------------------------------------------------------\r\n  // Verify data[1] >> last_name      \r\npm.test(\"Verify data[1] >> last_name\",function(){\r\npm.expect(jsonResponseData.json().data[1].last_name).to.equal(\"Ferguson\")})\r\n//-------------------------------------------------------------------\r\n// Verify avatar = https://reqres.in/img/faces/8-image.jpg \r\npm.test(\"Verify that avatar = https://reqres.in/img/faces/8-image.jpg \",function(){\r\n    pm.expect(jsonResponseData.json().data[1].avatar).to.include(\"https://reqres.in/img/faces/8\")\r\n})\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base}}/api/users?page=2",
+              "host": [
+                "{{Base}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET > Single user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var ResponseData = pm.response ; \r\n\r\n\r\n// 1- Validate on the response code \r\npm.test(\"Validate on successful response code 200 \", function(){\r\npm.expect(ResponseData.code).to.equal(200) ; \r\n}) ;\r\n// 2-Validate on the response time \r\n\r\n pm.test(\"Validate on the response time \",function(){\r\npm.expect(ResponseData.status).to.oneOf([\"OK\",\"ok\",\"Ok\",\"oK\"]);\r\n\r\n\r\n})\r\n\r\n//3- Validate on the response time \r\npm.test(\"Validate on the response time\", function(){\r\npm.expect(ResponseData.responseTime).below(2000) ; })\r\n//---------------------------\r\n// Testing on response component \r\npm.test(\"Validate on the data >>id\", function(){\r\npm.expect(ResponseData.json().data.id).equal(2) ; })\r\n\r\n\r\n\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://reqres.in/api/users/2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": {{name}},\r\n  \"job\": {{Job}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base}}/api/users",
+              "host": [
+                "{{Base}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"item_name\": \"Wireless Mouse\", \"sku\": \"MS-001\", \"quantity\": 50, \"price\": 25.00,\r\n\r\n\"category_id\": 3 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://reqres.in/api/users?page=2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Resources",
+      "item": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "Base",
+      "value": ""
+    }
+  ]
+}
